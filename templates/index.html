@@ -1,0 +1,210 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SchoolSmart.ai - Find Your Funding</title>
+    <meta name="description" content="SchoolSmart.ai helps students find and apply for scholarships. Search thousands of opportunities to fund your education.">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🎓</text></svg>">
+</head>
+<body class="light-mode">
+    <!-- Navigation -->
+    {% include 'header.html' %}
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-background">
+            <div class="hero-particles"></div>
+        </div>
+        <div class="hero-content container">
+            <h1 class="hero-title animate-fade-in">Discover Your Next Scholarship</h1>
+            <p class="hero-subtitle animate-fade-in animate-fade-in-delay-1">
+                Access thousands of scholarships to fund your education. Use AI-powered recommendations or advanced search to find your perfect match!
+            </p>
+            
+            <div class="hero-stats animate-fade-in animate-fade-in-delay-2">
+                <div class="stat-item">
+                    <span class="stat-number" id="totalScholarships">0</span>
+                    <span class="stat-label">Total Scholarships</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="totalAmount">$0</span>
+                    <span class="stat-label">Total Amount Available</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="studentsHelped">0</span>
+                    <span class="stat-label">Students Helped</span>
+                </div>
+            </div>
+
+            <!-- Updated CTA Section -->
+            <div class="hero-cta animate-fade-in animate-fade-in-delay-3">
+                <h3>How would you like to find scholarships?</h3>
+                
+                <div class="cta-options">
+                    <div class="cta-option">
+                        <div class="cta-option-icon">🤖</div>
+                        <h4>AI Scholarship Advisor</h4>
+                        <p>Chat with our AI to get personalized recommendations based on your profile</p>
+                        <a href="{{ url_for('ai_recommend_page') }}" class="btn btn-primary">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                            </svg>
+                            Start AI Chat
+                        </a>
+                    </div>
+
+                    <div class="cta-divider">
+                        <span>OR</span>
+                    </div>
+
+                    <div class="cta-option">
+                        <div class="cta-option-icon">🔍</div>
+                        <h4>Advanced Search</h4>
+                        <p>Use detailed filters to search through our comprehensive scholarship database</p>
+                        <a href="{{ url_for('search_page') }}" class="btn btn-secondary">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="11" cy="11" r="8"/>
+                                <path d="m21 21-4.35-4.35"/>
+                            </svg>
+                            Browse Scholarships
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Search -->
+                <div class="quick-search-container">
+                    <div class="quick-search-divider">
+                        <span>Or try a quick search</span>
+                    </div>
+                    <form class="quick-search-form" id="quickSearchForm">
+                        <input type="text" name="q" placeholder="Enter keywords (e.g., 'Engineering', 'Art', 'International student')" class="quick-search-input">
+                        <button type="submit" class="quick-search-btn">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <circle cx="11" cy="11" r="8"/>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header animate-on-scroll">
+                <h2 class="section-title">Why Choose SchoolSmart.ai?</h2>
+                <p class="section-subtitle">We provide the tools and resources you need to succeed in your scholarship search.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card animate-on-scroll">
+                    <span class="feature-icon">🤖</span>
+                    <h3>AI-Powered Matching</h3>
+                    <p>Our intelligent chatbot analyzes your profile to recommend scholarships perfectly tailored to your needs and qualifications.</p>
+                </div>
+                <div class="feature-card animate-on-scroll" style="animation-delay: 0.1s;">
+                    <span class="feature-icon">🔍</span>
+                    <h3>Comprehensive Database</h3>
+                    <p>Access a vast collection of scholarships, updated regularly with advanced filters to find opportunities that match your criteria.</p>
+                </div>
+                <div class="feature-card animate-on-scroll" style="animation-delay: 0.2s;">
+                    <span class="feature-icon">💡</span>
+                    <h3>Expert Guidance</h3>
+                    <p>Get valuable tips on applications, essay writing, and interviews to significantly boost your chances of success.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section" id="about-us">
+        <div class="container cta-content animate-on-scroll">
+            <h2 class="cta-title">Ready to Fund Your Future?</h2>
+            <p class="cta-subtitle">Don't let finances hold you back. Start your scholarship journey with SchoolSmart.ai today and unlock your potential.</p>
+            <div class="cta-buttons">
+                <a href="{{ url_for('ai_recommend_page') }}" class="btn btn-primary">Try AI Advisor</a>
+                <a href="{{ url_for('search_page') }}" class="btn btn-secondary">Browse All Scholarships</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="footer" id="contact-us">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-brand nav-brand">
+                         <span class="nav-logo footer-logo">🎓</span>
+                         <span>SchoolSmart.ai</span>
+                    </div>
+                    <p class="footer-description">Empowering students worldwide to achieve their educational dreams through accessible scholarship opportunities.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="{{ url_for('search_page') }}">Search Scholarships</a></li>
+                        <li><a href="{{ url_for('ai_recommend_page') }}">AI Advisor</a></li>
+                        <li><a href="#application-tips">Application Tips</a></li>
+                        <li><a href="#essay-guides">Essay Guides</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#help-center">Help Center</a></li>
+                        <li><a href="#contact-us">Contact Us</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                        <li><a href="#feedback">Site Feedback</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#about-us">About Us</a></li>
+                        <li><a href="#privacy-policy">Privacy Policy</a></li>
+                        <li><a href="#terms-of-service">Terms of Service</a></li>
+                        <li><a href="#careers">Careers</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© <span id="currentYear">2024</span> SchoolSmart.ai. All rights reserved. Empowering education, one scholarship at a time.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Loading Overlay (shared across pages) -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <p>Loading...</p> <!-- Default message, can be changed by JS -->
+        </div>
+    </div>
+    
+    <!-- Scholarship Detail Modal Structure (shared across pages) -->
+    <div id="scholarshipModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle" style="display:none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle" class="modal-title-text">Scholarship Details</h2>
+                <button class="modal-close" onclick="closeModal('scholarshipModal')" aria-label="Close modal">×</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Content will be populated by JavaScript -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeModal('scholarshipModal')">Close</button>
+                <a id="modalApplyBtn" href="#" target="_blank" rel="noopener noreferrer" class="btn-primary">Apply Now</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

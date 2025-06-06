@@ -1,0 +1,154 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - User Management - SchoolSmart.ai</title>
+    <meta name="description" content="Manage users on SchoolSmart.ai.">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🎓</text></svg>">
+    <style>
+        .admin-table-container {
+            padding: 2rem;
+            background-color: var(--bg-primary);
+            border-radius: 0.5rem;
+            box-shadow: var(--shadow-lg);
+            overflow-x: auto; /* For responsive table */
+            margin-top: 1rem; /* Space below header/flash messages */
+        }
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+        }
+        .admin-table th, .admin-table td {
+            border: 1px solid var(--border-primary);
+            padding: 0.75rem 1rem;
+            text-align: left;
+            font-size: 0.9rem;
+            white-space: nowrap; /* Prevent text wrapping for easier reading of emails/timestamps */
+        }
+        .admin-table th {
+            background-color: var(--bg-secondary);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .admin-table td {
+            color: var(--text-secondary);
+        }
+        .admin-table tr:nth-child(even) td {
+            background-color: var(--bg-tertiary);
+        }
+         .dark-mode .admin-table tr:nth-child(even) td {
+            background-color: var(--bg-secondary); /* Adjust for dark mode even rows */
+        }
+        .admin-table tr:hover td {
+            background-color: var(--accent-primary-light); /* You might need to define this color or use an existing one */
+        }
+        .dark-mode .admin-table tr:hover td {
+            background-color: rgba(99, 102, 241, 0.2); /* Example dark mode hover */
+        }
+        .no-users-message {
+            padding: 1.5rem;
+            text-align: center;
+            color: var(--text-secondary);
+            background-color: var(--bg-secondary);
+            border-radius: 0.5rem;
+        }
+    </style>
+</head>
+<body class="light-mode">
+    <!-- Navigation -->
+    {% include 'header.html' %}
+
+    <!-- Admin Section -->
+    <section class="results-section" style="padding-top: 8rem; min-height: calc(100vh - 160px);">
+        <div class="container">
+            <div class="results-header" style="margin-bottom: 1rem;"> <!-- Reduced margin -->
+                 <h1 class="section-title" style="margin-bottom: 0;">User Management</h1>
+            </div>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                <div class="flash-messages" style="margin-bottom:1rem;">
+                    {% for category, message in messages %}
+                    <div class="flash-message flash-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            {% endwith %}
+
+            <div class="admin-table-container">
+                {% if users %}
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">Total users: {{ users|length }}</p>
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Registered At (UTC)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                        <tr>
+                            <td>{{ user.id }}</td>
+                            <td>{{ user.name }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.created_at.split('.')[0] if user.created_at else 'N/A' }}</td> {# Basic formatting to remove microseconds #}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <div class="no-users-message">
+                    <p>No users found in the database or there was an error fetching the user list.</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-brand">
+                        <div class="nav-logo" aria-hidden="true">🎓</div>
+                        <span>SchoolSmart.ai</span>
+                    </div>
+                    <p>Your journey to educational funding starts here.</p>
+                </div>
+                 <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="{{ url_for('search_page') }}">Search</a></li>
+                        <li><a href="{{ url_for('ai_recommend_page') }}">AI Advisor</a></li>
+                        {% if g.user %}
+                        <li><a href="{{ url_for('bookmarks_page') }}">My Bookmarks</a></li>
+                        {% if g.user and 'email' in g.user and g.user.email == "greene.wyatt30@gmail.com" %}
+                        <li><a href="{{ url_for('admin_page') }}">Admin</a></li>
+                        {% endif %}
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© <span id="currentYearAdminPage">2024</span> SchoolSmart.ai. All rights reserved.</p>
+                 <script>
+                    const yearSpan = document.getElementById('currentYearAdminPage');
+                    if(yearSpan) yearSpan.textContent = new Date().getFullYear();
+                 </script>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

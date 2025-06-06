@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Scholarship Advisor - SchoolSmart.ai</title>
+    <meta name="description" content="Get personalized scholarship recommendations from our AI Advisor.">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🎓</text></svg>">
+</head>
+<body class="light-mode">
+    <!-- Navigation -->
+    {% include 'header.html' %}
+
+    <!-- AI Chat Page -->
+    <div class="ai-page">
+        <div class="ai-chat-area-wrapper"> <!-- Added wrapper for gradient background -->
+            <div class="ai-container">
+                <div class="ai-header">
+                    <h1 class="ai-title">AI Scholarship Advisor</h1>
+                    <p class="ai-subtitle">Chat with our AI to get personalized scholarship recommendations</p>
+                </div>
+
+                <div class="chat-container">
+                    <div class="chat-header">
+                        <div class="ai-avatar">🤖</div>
+                        <div class="ai-status">
+                            <div class="ai-name">SchoolSmart.ai</div>
+                            <p class="ai-description">Your personal scholarship advisor</p>
+                        </div>
+                        <div class="chat-actions">
+                            <button class="chat-action-btn" onclick="clearChat()" title="Clear chat">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6h14zM10 11v6M14 11v6"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-messages" id="chatMessages">
+                        <!-- Initial Welcome State -->
+                        <div class="welcome-state">
+                            <div class="welcome-icon">🎓</div>
+                            <h3>Welcome to SchoolSmart.ai!</h3>
+                            <p>I'm here to help you find scholarships that match your profile. Tell me about yourself to get started!</p>
+                            <div class="welcome-suggestions">
+                                <button class="welcome-suggestion" onclick="sendSuggestion('I study computer science with a 3.2 GPA')">
+                                    Computer Science Student
+                                </button>
+                                <button class="welcome-suggestion" onclick="sendSuggestion('I need scholarships for engineering majors')">
+                                    Engineering Major
+                                </button>
+                                <button class="welcome-suggestion" onclick="sendSuggestion('International student looking for aid')">
+                                    International Student
+                                </button>
+                                <button class="welcome-suggestion" onclick="sendSuggestion('First-generation college student')">
+                                    First-Gen Student
+                                </button>
+                            </div>
+                        </div>
+                        <!-- Messages will be appended here by JavaScript -->
+                    </div>
+                    
+                    <div class="chat-input-container">
+                        <div class="chat-input-wrapper">
+                            <textarea id="chatInput" class="chat-input" placeholder="Tell me about your field of study, GPA, or what scholarships you're looking for..." rows="1"></textarea>
+                            <button id="sendBtn" class="send-btn" title="Send message" disabled>
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="22" y1="2" x2="11" y2="13"/>
+                                    <polygon points="22,2 15,22 11,13 2,9 22,2"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Scholarship Recommendations (populated by JS) -->
+        <div class="ai-scholarship-recommendations" id="aiScholarshipRecommendations">
+            <!-- Recommendations will be populated here -->
+        </div>
+    </div>
+    
+    <!-- Loading Overlay (Shared) -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <p>Processing...</p>
+        </div>
+    </div>
+
+    <!-- Scholarship Detail Modal (Shared) -->
+    <div id="scholarshipModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle" style="display:none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle" class="modal-title-text">Scholarship Details</h2>
+                <button class="modal-close" onclick="closeModal('scholarshipModal')" aria-label="Close modal">×</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Content will be populated by JavaScript -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeModal('scholarshipModal')">Close</button>
+                <a id="modalApplyBtn" href="#" target="_blank" rel="noopener noreferrer" class="btn-primary">Apply Now</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <!-- Minimal inline script, if any, for page-specific initializations not covered by global script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // The initializeAIChatPage() in script.js should handle most setup.
+            // If specific focus or actions are needed only for ai-recommend.html after script.js runs:
+            const chatInput = document.getElementById('chatInput');
+            if (chatInput) {
+                // chatInput.focus(); // Example: ensure focus after everything
+            }
+        });
+    </script>
+</body>
+</html>

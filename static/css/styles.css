@@ -1,0 +1,2498 @@
+:root {
+  /* Light Mode Colors */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc;
+  --bg-tertiary: #f1f5f9;
+  --text-primary: #1e293b;
+  --text-secondary: #64748b;
+  --text-tertiary: #94a3b8;
+  --border-primary: #e2e8f0;
+  --border-secondary: #cbd5e1;
+  
+  /* Brand Colors */
+  --accent-primary: #6366f1;
+  --accent-secondary: #8b5cf6;
+  --accent-tertiary: #ec4899;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --error: #ef4444;
+  
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+  --gradient-secondary: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  --gradient-hero: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  
+  /* Glass Effect (primarily for elements on top of --gradient-hero) */
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --glass-backdrop: blur(20px);
+  
+  /* Spacing */
+  --container-max-width: 1280px;
+  --section-padding: 5rem 0;
+  --element-spacing: 2rem;
+  
+  /* Typography */
+  --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+}
+
+/* Dark Mode Colors */
+.dark-mode {
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-tertiary: #334155;
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-tertiary: #94a3b8;
+  --border-primary: #334155;
+  --border-secondary: #475569;
+  
+  --gradient-secondary: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+  
+  /* Glass effect on dark backgrounds (if different from light mode's interpretation) */
+  /* For elements on top of --gradient-hero, light glass vars might still be best */
+  /* If an element uses glass effect on top of var(--bg-primary) in dark mode: */
+  /* --glass-bg: rgba(15, 23, 42, 0.8); */
+  /* --glass-border: rgba(255, 255, 255, 0.1); */
+}
+
+/* Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-primary);
+  line-height: 1.6;
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  transition: background-color var(--transition-normal), color var(--transition-normal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.container {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+@media (min-width: 640px) {
+  .container {
+    padding: 0 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding: 0 2rem;
+  }
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  color: var(--text-primary); /* Ensure headings also use theme color */
+}
+
+h1 { font-size: clamp(2.5rem, 5vw, 4rem); }
+h2 { font-size: clamp(2rem, 4vw, 3rem); }
+h3 { font-size: clamp(1.5rem, 3vw, 2rem); }
+h4 { font-size: 1.25rem; }
+
+p {
+  margin-bottom: 1rem;
+  color: var(--text-secondary);
+}
+
+a {
+  color: var(--accent-primary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--accent-secondary);
+}
+
+/* Utility Classes */
+.text-gradient {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.glass-effect { /* General glass effect for elements not on hero gradient */
+  background: var(--glass-bg); /* Will pick light or dark mode variable */
+  backdrop-filter: var(--glass-backdrop);
+  border: 1px solid var(--glass-border); /* Will pick light or dark mode variable */
+}
+.dark-mode .glass-effect { /* Specific dark mode glass if needed on dark backgrounds */
+    background: rgba(15, 23, 42, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+
+/* Navigation */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  /* Navbar itself uses the light mode glass vars as it's often on complex backgrounds or hero */
+  background: rgba(255, 255, 255, 0.1); 
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all var(--transition-normal);
+}
+.dark-mode .navbar { /* Slightly different glass for navbar in dark mode */
+    background: rgba(15, 23, 42, 0.7);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--text-primary);
+  text-decoration: none;
+}
+
+.nav-brand a {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: inherit;
+}
+
+.nav-logo {
+  font-size: 1.5rem;
+}
+
+.nav-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.theme-toggle {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-primary);
+  color: var(--text-primary);
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.theme-toggle:hover {
+  background: var(--bg-tertiary);
+  transform: scale(1.05);
+}
+
+
+/* Mobile Navigation Menu */
+.nav-links {
+  display: none; 
+  flex-direction: column;
+  position: absolute;
+  top: 100%; 
+  left: 0;
+  right: 0;
+  background-color: var(--bg-secondary);
+  padding: 1rem;
+  border-top: 1px solid var(--border-primary);
+  box-shadow: var(--shadow-md);
+  z-index: 999; 
+}
+
+.nav-links a {
+  padding: 0.75rem 1rem;
+  color: var(--text-primary);
+  text-decoration: none;
+  border-radius: 0.25rem;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+  display: block; 
+}
+.nav-links a.active {
+    font-weight: bold;
+    color: var(--accent-primary);
+}
+
+.nav-links a:hover {
+  background-color: var(--bg-tertiary);
+  color: var(--accent-primary);
+}
+
+.nav-menu-toggle { /* For index.html mobile menu button */
+  display: none; 
+  flex-direction: column;
+  justify-content: space-around; 
+  width: 1.75rem; 
+  height: 1.75rem; 
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0; 
+  z-index: 1001; 
+}
+
+.nav-menu-toggle span {
+  display: block;
+  width: 1.5rem;
+  height: 2px;
+  background: var(--text-primary);
+  border-radius: 1px;
+  transition: all var(--transition-normal);
+  transform-origin: center; 
+}
+
+
+.mobile-menu-toggle { /* For ai-recommend.html and search.html menu button */
+  display: none; /* Hidden by default, shown on mobile */
+  flex-direction: column;
+  justify-content: space-around;
+  width: 1.75rem;
+  height: 1.75rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1001;
+}
+
+.mobile-menu-toggle span {
+  display: block;
+  width: 1.5rem;
+  height: 2px;
+  background: var(--text-primary);
+  border-radius: 1px;
+  transition: all var(--transition-normal);
+  transform-origin: center;
+}
+
+.mobile-menu-toggle.active span:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+.mobile-menu-toggle.active span:nth-child(2) {
+  opacity: 0;
+  transform: translateX(-100%);
+}
+.mobile-menu-toggle.active span:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+
+@media (max-width: 768px) {
+  .nav-menu-toggle, .mobile-menu-toggle { /* Show both types of mobile menu buttons on mobile */
+    display: flex;
+  }
+  .nav-links.active { 
+    display: flex;
+  }
+}
+
+@media (min-width: 769px) {
+  .nav-menu-toggle, .mobile-menu-toggle { display: none; } /* Hide both on desktop */
+  .nav-links { /* Desktop nav links */
+    display: flex !important; /* Override mobile's display:none */
+    flex-direction: row;
+    position: static;
+    background-color: transparent;
+    padding: 0;
+    border-top: none;
+    box-shadow: none;
+  }
+  .nav-links a { padding: 0.5rem 1rem; }
+}
+
+
+.nav-menu-toggle.active span:nth-child(1) {
+  transform: translateY(6px) rotate(45deg); 
+}
+
+.nav-menu-toggle.active span:nth-child(2) {
+  opacity: 0;
+  transform: translateX(-100%); 
+}
+
+.nav-menu-toggle.active span:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg); 
+}
+
+
+/* Hero Section */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6rem 0 4rem;
+  background: var(--gradient-hero);
+  background-size: 200% 200%;
+  animation: gradientShift 12s ease infinite;
+  overflow: hidden;
+}
+
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.hero-background {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.hero-particles::before,
+.hero-particles::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  animation: float 8s ease-in-out infinite;
+}
+
+.hero-particles::before {
+  width: 200px;
+  height: 200px;
+  top: 20%;
+  left: 10%;
+  animation-delay: -2s;
+}
+
+.hero-particles::after {
+  width: 150px;
+  height: 150px;
+  bottom: 20%;
+  right: 15%;
+  animation-delay: -4s;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-30px) rotate(180deg); }
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: white; /* Text on hero gradient should be white */
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+.hero-content h1, .hero-content h2, .hero-content h3, .hero-content h4, .hero-content p {
+    color: white; /* Ensure all text directly in hero-content is white */
+}
+
+
+.hero-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.hero-subtitle {
+  font-size: clamp(1.125rem, 2vw, 1.5rem);
+  margin-bottom: 3rem;
+  opacity: 0.95;
+  max-width: 700px; /* Increased for new subtitle */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-stats {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  margin-bottom: 4rem;
+  flex-wrap: wrap;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-number {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #fbbf24; /* Accent color for stats, fine for both themes */
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.stat-label {
+  font-size: 0.875rem;
+  opacity: 0.8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Hero CTA Styles (from index.html) */
+.hero-cta {
+    max-width: 900px;
+    margin: 0 auto;
+}
+.hero-cta h3 { /* Specific h3 within hero-cta */
+    color: white !important; /* Override general h3 if needed */
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+
+.cta-options {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 2rem;
+    margin-bottom: 3rem;
+    align-items: center;
+}
+
+.cta-option {
+    background: var(--glass-bg); /* Uses light mode glass vars, fine on hero gradient */
+    backdrop-filter: var(--glass-backdrop);
+    border: 1px solid var(--glass-border);
+    border-radius: 1.5rem;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.cta-option:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.15); /* Slightly lighter glass on hover */
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.cta-option-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    display: block;
+    color: white; /* Icon color */
+}
+
+.cta-option h4 {
+    color: white !important; /* Text on glass/gradient */
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.cta-option p {
+    color: rgba(255, 255, 255, 0.9) !important; /* Text on glass/gradient */
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+    flex-grow: 1;
+}
+.cta-option .btn-primary, .cta-option .btn-secondary {
+    /* Buttons inside cta-option might need specific styling if default doesn't fit */
+}
+.cta-option .btn-secondary { /* Make secondary button more visible on hero */
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+}
+.cta-option .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.3);
+    color: white;
+}
+
+
+.cta-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    color: white;
+    font-weight: 600;
+    font-size: 0.875rem;
+}
+
+.quick-search-container {
+    margin-top: 2rem;
+}
+
+.quick-search-divider {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.quick-search-divider span {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.5rem 1rem;
+    border-radius: 1rem;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.875rem;
+}
+
+.quick-search-form {
+    display: flex;
+    gap: 0.5rem;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.quick-search-input {
+    flex: 1;
+    padding: 1rem 1.5rem;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 2rem;
+    background: rgba(255, 255, 255, 0.9); /* Light input field */
+    font-size: 1rem;
+    color: #333; /* Dark text for light input */
+    transition: all 0.3s ease;
+}
+
+.quick-search-input:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    background: rgba(255, 255, 255, 1);
+    transform: translateY(-2px);
+}
+
+.quick-search-input::placeholder {
+    color: #666; /* Placeholder for light input */
+}
+
+.quick-search-btn {
+    background: var(--accent-primary);
+    border: none;
+    color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.quick-search-btn:hover {
+    background: var(--accent-secondary);
+    transform: scale(1.1);
+}
+
+
+
+/* Search Components (for search.html and homePageSearchForm if it existed) */
+.search-container { /* This was for old home search form, might be unused now */
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.search-form { /* This was for old home search form */
+  background: var(--glass-bg); /* Uses light mode glass */
+  backdrop-filter: var(--glass-backdrop);
+  border: 1px solid var(--glass-border);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  box-shadow: var(--shadow-2xl);
+}
+
+.search-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.search-field label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: white; /* Label color on glass bg */
+}
+
+.search-input { /* For inputs inside .search-form (old home search) */
+  width: 100%;
+  padding: 0.875rem 1rem;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0.75rem;
+  background: rgba(255, 255, 255, 0.9);
+  font-size: 1rem;
+  transition: all var(--transition-normal);
+  backdrop-filter: blur(10px);
+  color: #333; 
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+  transform: translateY(-2px);
+}
+.search-input[type="date"]:not(:valid):before {
+    content: attr(placeholder);
+    color: #757575; 
+}
+.search-input::placeholder { 
+    color: #757575;
+    opacity: 1; 
+}
+
+.search-btn { /* For button inside .search-form (old home search) */
+  background: var(--gradient-primary);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.search-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left var(--transition-slow);
+}
+
+.search-btn:hover::before {
+  left: 100%;
+}
+
+.search-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
+}
+
+/* Search Header (Search Results Page - search.html) */
+.search-header {
+  background: var(--gradient-hero); /* Uses hero gradient */
+  padding: 8rem 0 3rem;
+  color: white; /* Text on hero gradient should be white */
+}
+.search-header h1, .search-header p {
+    color: white !important; /* Ensure text is white */
+}
+
+.search-header-content {
+  text-align: center;
+}
+
+.search-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  margin-bottom: 1rem;
+}
+
+.search-subtitle {
+  font-size: 1.25rem;
+  margin-bottom: 3rem;
+  opacity: 0.9;
+}
+
+.advanced-search-form { /* Form on search.html */
+  background: var(--glass-bg); /* Light mode glass, on hero gradient */
+  backdrop-filter: var(--glass-backdrop);
+  border: 1px solid var(--glass-border);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.advanced-search-form label { /* Labels inside advanced search form */
+    color: white !important;
+}
+
+.search-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.search-field-group {
+  display: flex;
+  gap: 0.75rem;
+  flex: 1;
+  flex-wrap: wrap; 
+}
+
+.search-input-inline { /* Inputs in advanced search on search.html */
+  padding: 0.75rem 1rem;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0.5rem;
+  background: rgba(255, 255, 255, 0.9); /* Light input background */
+  font-size: 0.875rem;
+  transition: all var(--transition-normal);
+  color: #333; /* Dark text for light input background */
+}
+/* No specific dark mode override needed here if the search header always has the light text on gradient glass */
+
+.search-input-inline::placeholder {
+    color: #757575;
+    opacity: 1;
+}
+.search-input-inline[type="date"]:not(:valid):before {
+    content: attr(placeholder); 
+    color: #757575;
+}
+
+
+.search-input-inline:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+  background: rgba(255, 255, 255, 1); /* Fully opaque light on focus */
+  transform: translateY(-1px);
+  color: #111; /* Ensure dark text on focus as well */
+}
+
+.search-btn-inline {
+  background: var(--accent-primary);
+  color: white;
+  border: none;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-btn-inline:hover {
+  background: var(--accent-secondary);
+  transform: translateY(-1px);
+}
+
+.filters-toggle {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  transition: all var(--transition-normal);
+}
+
+.filters-toggle:hover, .filters-toggle.active {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.filters-panel {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  display: none; 
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease-out, padding-top 0.5s ease-out, margin-top 0.5s ease-out;
+}
+
+.filters-panel.active {
+  display: block; 
+  max-height: 500px; 
+}
+
+
+.filters-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.filter-group label { /* Already covered by .advanced-search-form label */
+  /* display: block;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: white; 
+  font-size: 0.875rem; */
+}
+/* General form input, styled below in FORM INPUTS section */
+/* .form-input {} */
+
+
+.filters-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1rem; 
+}
+
+.btn-clear, .btn-apply {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.btn-clear {
+  background: transparent;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.btn-clear:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.btn-apply {
+  background: var(--accent-primary);
+  color: white;
+  border: none;
+}
+
+.btn-apply:hover {
+  background: var(--accent-secondary);
+}
+
+/* Results Section (search.html) */
+.results-section {
+  padding: 3rem 0;
+  background: var(--bg-secondary); /* Theme-aware */
+}
+
+.results-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.results-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.results-count {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+}
+
+.active-filters {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.filter-tag {
+  background: var(--accent-primary);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.filter-tag button {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 0;
+  width: 1rem;
+  height: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background var(--transition-fast);
+  font-size: 1rem; 
+}
+
+.filter-tag button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.results-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.sort-control {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sort-control label {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.sort-select { /* Uses .form-input styles now */
+  /* padding: 0.5rem 0.75rem;
+  border: 1px solid var(--border-primary);
+  border-radius: 0.5rem;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 0.875rem; */
+}
+
+.view-toggle {
+  display: flex;
+  border: 1px solid var(--border-primary);
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.view-btn {
+  background: var(--bg-primary);
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: all var(--transition-fast);
+}
+.view-btn svg { fill: var(--text-secondary); }
+
+
+.view-btn.active,
+.view-btn:hover {
+  background: var(--accent-primary);
+  color: white;
+}
+.view-btn.active svg, .view-btn:hover svg {
+    fill: white;
+}
+
+
+/* Scholarship Cards (search.html & ai-recommend.html recommendations) */
+.scholarships-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1.5rem;
+}
+
+.scholarship-card {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-primary);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.scholarship-card::before { /* Hover shine effect */
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.1), transparent);
+  transition: left var(--transition-slow);
+}
+.dark-mode .scholarship-card::before { /* Dark mode shine */
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+}
+
+
+.scholarship-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-2xl);
+  border-color: var(--accent-primary);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.card-badge {
+  background: var(--gradient-primary);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  font-weight: 700;
+  font-size: 0.875rem;
+  box-shadow: var(--shadow-md);
+}
+
+.bookmark-btn {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-primary);
+  color: var(--text-secondary); /* SVG will inherit this */
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+.bookmark-btn svg { /* For the SVG icon itself */
+    fill: none;
+    stroke: currentColor; /* Takes color from .bookmark-btn */
+    transition: fill var(--transition-normal), stroke var(--transition-normal);
+}
+
+.bookmark-btn:hover {
+  background: var(--accent-primary);
+  color: white; /* SVG will become white */
+  border-color: var(--accent-primary);
+  transform: scale(1.1);
+}
+.bookmark-btn.active { /* Active state when bookmarked */
+  background: var(--accent-primary);
+  color: white; /* SVG becomes white */
+  border-color: var(--accent-primary);
+}
+.bookmark-btn.active svg {
+    fill: white; /* Filled heart/bookmark */
+    stroke: white;
+}
+
+
+.card-content {
+  flex: 1;
+  margin-bottom: 1.5rem;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
+.card-organization {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.card-description {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  font-size: 0.9rem; 
+}
+
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.tag {
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  transition: all var(--transition-fast);
+}
+
+.tag:hover {
+  background: var(--accent-primary);
+  color: white;
+  transform: translateY(-1px);
+}
+
+.card-meta {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+}
+
+.meta-item svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0; 
+  stroke: currentColor; /* Icon color from parent */
+}
+
+.card-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.btn-primary, .btn-secondary {
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  flex: 1;
+  text-align: center;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn-primary[disabled], .btn-secondary[disabled] {
+    opacity: 0.6;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+
+.btn-primary {
+  background: var(--gradient-primary);
+  color: white;
+  border: none;
+}
+
+.btn-primary:not([disabled]):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+  color: white; /* Keep color white */
+}
+.dark-mode .btn-primary:not([disabled]):hover {
+    box-shadow: 0 8px 20px rgba(99, 102, 241, 0.2); /* Softer shadow in dark mode */
+}
+
+
+.btn-secondary {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-primary);
+}
+
+.btn-secondary:not([disabled]):hover {
+  background: var(--bg-tertiary);
+  transform: translateY(-1px);
+  color: var(--text-primary); /* Keep color */
+}
+
+/* Features Section (index.html) */
+.features {
+  padding: var(--section-padding);
+  background: var(--bg-primary);
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.section-subtitle {
+  font-size: 1.125rem;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.feature-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-primary);
+  border-radius: 1rem;
+  padding: 2rem;
+  text-align: center;
+  transition: all var(--transition-normal);
+}
+
+.feature-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-xl);
+  border-color: var(--accent-primary);
+}
+
+.feature-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  display: block;
+  color: var(--accent-primary); /* Give icon a color */
+}
+
+.feature-card h3 {
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.feature-card p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* CTA Section (index.html) */
+.cta-section {
+  padding: var(--section-padding);
+  background: var(--gradient-hero); /* Hero gradient */
+  color: white; /* Text on hero gradient */
+  text-align: center;
+}
+.cta-section h2, .cta-section p {
+    color: white !important; /* Ensure text is white */
+}
+
+.cta-content {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.cta-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  margin-bottom: 1rem;
+}
+
+.cta-subtitle {
+  font-size: 1.125rem;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.cta-buttons .btn-primary,
+.cta-buttons .btn-secondary {
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  border-radius: 0.75rem;
+}
+
+.cta-buttons .btn-secondary { /* Secondary button on hero gradient */
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+}
+
+.cta-buttons .btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.3);
+  color: white;
+}
+
+/* Pagination (search.html) */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 3rem;
+  flex-wrap: wrap;
+}
+
+.pagination-btn {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-primary);
+  color: var(--text-primary);
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background: var(--bg-secondary);
+  transform: translateY(-1px);
+}
+
+.pagination-btn.active {
+  background: var(--accent-primary);
+  color: white;
+  border-color: var(--accent-primary);
+}
+
+.pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination-btn:disabled:hover {
+  transform: none;
+  background: var(--bg-primary); 
+}
+
+
+.pagination-numbers {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.pagination-dots {
+  color: var(--text-secondary);
+  padding: 0.75rem 0.5rem;
+  display: flex; 
+  align-items: center; 
+}
+
+/* Footer */
+.footer {
+  background: var(--bg-tertiary);
+  padding: 3rem 0 1.5rem;
+  border-top: 1px solid var(--border-primary);
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.footer-section h4 {
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+
+.footer-brand { /* Already defined .nav-brand, but this can be for footer context */
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.footer-logo { /* Already defined .nav-logo */
+  font-size: 1.5rem;
+}
+
+.footer-description { /* For p tag in footer brand section */
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 0;
+}
+
+.footer-section ul {
+  list-style: none;
+}
+
+.footer-section ul li {
+  margin-bottom: 0.5rem;
+}
+
+.footer-section ul li a {
+  color: var(--text-secondary);
+  transition: color var(--transition-fast);
+}
+
+.footer-section ul li a:hover {
+  color: var(--accent-primary);
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border-primary);
+}
+
+.footer-bottom p {
+  color: var(--text-secondary);
+  margin: 0;
+  font-size: 0.875rem;
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6); 
+  backdrop-filter: blur(5px); 
+  z-index: 10000;
+  display: flex; 
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0s linear 0.3s; 
+  padding: 1rem;
+}
+.dark-mode .modal-overlay {
+    background: rgba(0, 0, 0, 0.8); /* Darker overlay for dark mode */
+}
+
+.modal-overlay.show {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s ease, visibility 0s linear 0s;
+}
+
+.modal-content {
+  background: var(--bg-primary);
+  border-radius: 1rem;
+  max-width: 600px;
+  width: 100%;
+  max-height: 90vh;
+  display: flex; 
+  flex-direction: column; 
+  box-shadow: var(--shadow-2xl);
+  transform: scale(0.95) translateY(20px);
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); 
+  overflow: hidden; 
+}
+
+.modal-overlay.show .modal-content {
+  transform: scale(1) translateY(0);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--border-primary);
+  flex-shrink: 0; 
+}
+
+.modal-header h2 { 
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 1.5rem;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--text-secondary);
+  width: 2.5rem; 
+  height: 2.5rem; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all var(--transition-fast);
+}
+
+.modal-close:hover {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.modal-body {
+  padding: 1.5rem;
+  overflow-y: auto; 
+  flex-grow: 1; 
+}
+
+.scholarship-details { /* Inside modal body */
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.detail-section h3 {
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+  font-size: 1.125rem;
+}
+
+.detail-section p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+.detail-section p a {
+    word-break: break-all; 
+}
+
+.requirements-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.requirement-item {
+  background: var(--bg-secondary);
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  color: var(--text-secondary);
+  border-left: 3px solid var(--accent-primary);
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  padding: 1.5rem;
+  border-top: 1px solid var(--border-primary);
+  flex-shrink: 0; 
+}
+
+/* No Results Styles (search.html) */
+.no-results {
+  grid-column: 1 / -1; /* Spans all columns if in a grid */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  padding: 2rem; 
+}
+
+.no-results-content {
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+.no-results-content svg {
+  margin-bottom: 1rem;
+  color: var(--text-tertiary);
+  width: 64px;
+  height: 64px;
+}
+
+.no-results-content h3 {
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.no-results-content p {
+  margin-bottom: 1.5rem;
+}
+
+/* Loading Styles */
+.loading-placeholder {
+  grid-column: 1 / -1; /* Spans all columns if in a grid */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+}
+
+.loading-spinner { /* For both loading placeholder and overlay */
+  text-align: center;
+  color: var(--text-secondary); /* Text color for "Loading..." */
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid var(--border-primary);
+  border-top: 4px solid var(--accent-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+}
+.dark-mode .loading-overlay {
+    background: rgba(0, 0, 0, 0.7); /* Darker overlay for dark mode */
+}
+
+.loading-overlay.show {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s ease, visibility 0s linear 0s;
+}
+
+.loading-overlay .loading-spinner {
+  /* Uses light mode glass vars as it's an overlay on potentially complex bg */
+  background: var(--glass-bg); 
+  backdrop-filter: var(--glass-backdrop);
+  border: 1px solid var(--glass-border);
+  color: white; /* Text on glass is white */
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: var(--shadow-2xl);
+}
+/* If loading spinner needs to adapt to theme's primary text color for some reason: */
+/* .dark-mode .loading-overlay .loading-spinner { color: var(--text-primary); } */
+
+
+.field-error {
+  color: var(--error);
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.search-input.error { /* Example error state for an input */
+  border-color: var(--error);
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+/* Notification Styles */
+.notification-container {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 10001; 
+  max-width: 400px;
+  width: calc(100% - 2rem); 
+}
+
+.notification {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-primary);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transform: translateX(120%); 
+  opacity: 0;
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.4s ease;
+}
+
+.notification.show {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.notification-success { border-left: 4px solid var(--success); }
+.notification-error { border-left: 4px solid var(--error); }
+.notification-info { border-left: 4px solid var(--accent-primary); }
+
+.notification-close-btn { 
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+  color: var(--text-secondary);
+  padding: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color var(--transition-fast);
+}
+.notification-close-btn:hover {
+    color: var(--text-primary);
+}
+
+
+/* List View Styles (search.html) */
+.scholarships-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.scholarships-list .scholarship-card { /* Modifiers for list view */
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start; 
+  padding: 1rem;
+}
+
+.scholarships-list .card-header {
+    flex-basis: 150px; 
+    flex-shrink: 0;
+    margin-right: 1rem; 
+    margin-bottom: 0; 
+    flex-direction: column; 
+    align-items: flex-start; 
+}
+.scholarships-list .card-header .bookmark-btn {
+    margin-top: 0.5rem; 
+}
+
+
+.scholarships-list .card-content {
+  flex: 1;
+  margin-bottom: 0;
+  margin-right: 1rem;
+}
+
+.scholarships-list .card-actions {
+  flex-shrink: 0;
+  flex-direction: column; 
+  gap: 0.5rem; 
+  width: 150px; 
+}
+.scholarships-list .card-actions .btn-primary,
+.scholarships-list .card-actions .btn-secondary {
+    width: 100%; 
+    font-size: 0.8rem; 
+    padding: 0.5rem 0.75rem; 
+}
+
+/* AI Chat Page Styles (from ai-recommend.html) */
+.ai-page {
+    min-height: 100vh;
+    /* background: var(--gradient-hero); -- REMOVED */
+    /* background-attachment: fixed; -- REMOVED */
+    background-color: var(--bg-primary); /* Page itself will have the primary bg */
+    padding-top: 80px; /* Assuming navbar height */
+    display: flex; /* Added to structure sections */
+    flex-direction: column; /* Added */
+}
+
+.ai-chat-area-wrapper { /* New wrapper for the top gradient section */
+    background: var(--gradient-hero);
+    background-size: 200% 200%; /* If using gradientShift animation */
+    animation: gradientShift 12s ease infinite; /* If using gradientShift animation */
+    /* This wrapper will contain the .ai-container with header and chat */
+}
+
+.ai-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    /* height: calc(100vh - 80px); -- REMOVED specific height, let content flow */
+}
+
+.ai-header {
+    text-align: center;
+    color: white; /* Text on hero gradient */
+    margin-bottom: 2rem;
+}
+.ai-header h1, .ai-header p { color: white !important; }
+
+
+.ai-title {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.ai-subtitle {
+    font-size: 1.125rem;
+    opacity: 0.9;
+    margin-bottom: 0;
+}
+
+.chat-container {
+    flex: 1;
+    background: var(--bg-primary);
+    border-radius: 1.5rem;
+    box-shadow: var(--shadow-xl);
+    border: 1px solid var(--border-primary);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 500px; /* Minimum height for chat window */
+    max-height: 70vh; /* To prevent it from taking too much vertical space */
+}
+
+.chat-header {
+    background: var(--gradient-primary); /* Header of chat window */
+    padding: 1.5rem;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Light border on gradient */
+}
+
+.ai-avatar { /* Avatar in chat header */
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2); /* Glass effect */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.ai-status { flex: 1; }
+.ai-name { font-weight: 700; font-size: 1.125rem; margin-bottom: 0.25rem;}
+.ai-description { font-size: 0.875rem; opacity: 0.9; margin: 0; }
+
+.chat-actions { display: flex; gap: 0.5rem; }
+.chat-action-btn {
+    background: rgba(255, 255, 255, 0.2); /* Glass effect button */
+    border: none;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.chat-action-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+}
+.chat-action-btn svg { stroke: white; }
+
+
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.5rem;
+    background: var(--bg-secondary);
+    position: relative;
+}
+.chat-messages::-webkit-scrollbar { width: 6px; }
+.chat-messages::-webkit-scrollbar-track { background: var(--bg-tertiary); }
+.chat-messages::-webkit-scrollbar-thumb { background: var(--border-secondary); border-radius: 3px; }
+
+.message {
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    animation: slideInUp 0.4s ease-out;
+}
+@keyframes slideInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.message.user { flex-direction: row-reverse; }
+
+.message-avatar { /* Avatars in message stream */
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+    margin-top: 0.25rem;
+}
+.message.ai .message-avatar { background: var(--gradient-primary); color: white; }
+.message.user .message-avatar { background: var(--accent-tertiary); color: white; }
+
+.message-content {
+    max-width: 75%;
+    padding: 1rem 1.25rem;
+    border-radius: 1.25rem;
+    position: relative;
+    word-wrap: break-word;
+    line-height: 1.6;
+}
+.message.ai .message-content {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-primary);
+    border-bottom-left-radius: 0.5rem;
+    box-shadow: var(--shadow-md);
+}
+.message.user .message-content {
+    background: var(--gradient-primary); /* User message bubble */
+    color: white;
+    border-bottom-right-radius: 0.5rem;
+    box-shadow: var(--shadow-md);
+}
+.message-content strong { font-weight: 700; color: var(--accent-primary); }
+.message.user .message-content strong { color: rgba(255, 255, 255, 0.95); }
+.message-content em { font-style: italic; color: var(--text-secondary); }
+.message.user .message-content em { color: rgba(255, 255, 255, 0.9); }
+
+.message-time { font-size: 0.75rem; margin-top: 0.5rem; }
+.message.ai .message-time { text-align: left; color: var(--text-tertiary); }
+.message.user .message-time { text-align: right; color: rgba(255,255,255,0.8); }
+
+
+.typing-indicator .message-content { /* Typing indicator bubble */
+    background: var(--bg-primary) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--border-primary) !important;
+    display: flex; /* Added for styling dots and text */
+    align-items: center; /* Added */
+    gap: 0.75rem; /* Added */
+    padding: 1rem 1.25rem; /* Added */
+}
+.typing-dots { display: flex; gap: 0.25rem; }
+.typing-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent-primary); animation: typingAnimation 1.4s infinite ease-in-out; }
+.typing-dot:nth-child(1) { animation-delay: -0.32s; }
+.typing-dot:nth-child(2) { animation-delay: -0.16s; }
+.typing-indicator .message-content span { /* "Thinking..." text */
+    color: var(--text-secondary) !important;
+    font-style: italic;
+    font-size: 0.875rem;
+}
+
+
+@keyframes typingAnimation {
+    0%, 80%, 100% { transform: scale(0); opacity: 0.5; }
+    40% { transform: scale(1); opacity: 1; }
+}
+
+.suggestions-container { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+.suggestion-chip {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-primary);
+    color: var(--text-primary);
+    padding: 0.5rem 1rem;
+    border-radius: 1.5rem;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-right: 0.5rem; /* from inline JS */
+    margin-bottom: 0.5rem; /* from inline JS */
+}
+.suggestion-chip:hover { background: var(--accent-primary); color: white; border-color: var(--accent-primary); transform: translateY(-1px); }
+
+.chat-input-container {
+    padding: 1.5rem;
+    background: var(--bg-primary);
+    border-top: 1px solid var(--border-primary);
+}
+.chat-input-wrapper {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.75rem;
+    background: var(--bg-secondary);
+    border: 2px solid var(--border-primary);
+    border-radius: 1.5rem;
+    padding: 0.75rem 1rem;
+    transition: all 0.3s ease;
+}
+.chat-input-wrapper:focus-within { border-color: var(--accent-primary); box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1); }
+.dark-mode .chat-input-wrapper:focus-within { box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2); }
+
+/* AI Chat Input */
+.chat-input {
+    flex: 1; border: none; background: transparent; 
+    color: var(--text-primary); /* This should inherit correctly based on theme */
+    font-size: 1rem; line-height: 1.5; resize: none;
+    max-height: 100px; min-height: 24px; outline: none;
+}
+.chat-input::placeholder { color: var(--text-tertiary); }
+/* No specific dark mode changes for chat-input text, as its background is transparent within chat-input-wrapper */
+
+.chat-input-wrapper { /* Wrapper for chat input */
+    display: flex;
+    align-items: flex-end;
+    gap: 0.75rem;
+    background: var(--bg-secondary); /* This is the background chat-input sits on */
+    border: 2px solid var(--border-primary);
+    border-radius: 1.5rem;
+    padding: 0.75rem 1rem;
+    transition: all 0.3s ease;
+}
+.dark-mode .chat-input-wrapper {
+    background: var(--bg-tertiary); /* Darker wrapper in dark mode */
+    border-color: var(--border-secondary);
+}
+
+.chat-input-wrapper:focus-within { 
+    border-color: var(--accent-primary); 
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1); 
+}
+.dark-mode .chat-input-wrapper:focus-within { 
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2); 
+}
+
+.send-btn {
+    background: var(--gradient-primary); border: none; color: white;
+    width: 40px; height: 40px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: all 0.3s ease;
+}
+.send-btn svg { stroke: white; }
+.send-btn:hover:not(:disabled) { transform: scale(1.05); box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3); }
+.dark-mode .send-btn:hover:not(:disabled) { box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2); }
+.send-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none !important; }
+
+
+.ai-scholarship-recommendations {
+    margin-top: 2rem;
+    padding: 0 1rem 2rem 1rem; /* Add some padding around recommendations section */
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s ease;
+}
+.ai-scholarship-recommendations.show { opacity: 1; transform: translateY(0); }
+
+.ai-scholarship-recommendations .ai-container > div:first-child { /* Header for "AI Recommendations" */
+    /* Original: glass effect. Changed for better appearance on var(--bg-primary) */
+    background: var(--bg-secondary) !important; /* Use secondary background */
+    /* backdrop-filter: var(--glass-backdrop) !important; -- REMOVED */
+    border: 1px solid var(--border-primary) !important; /* Use primary border */
+    color: var(--text-primary) !important; /* Use primary text color */
+    text-align: center; margin-bottom: 2rem; padding: 2rem; border-radius: 1rem;
+}
+.ai-scholarship-recommendations .ai-container > div:first-child h2,
+.ai-scholarship-recommendations .ai-container > div:first-child p {
+    color: var(--text-primary) !important; /* Ensure text uses theme color */
+}
+/* The next div inside .ai-scholarship-recommendations .ai-container is the .scholarships-grid which is fine */
+/* Action buttons below recommendations */
+.ai-scholarship-recommendations .ai-container > div:last-child { /* The action buttons container */
+    text-align: center; margin-top: 2rem; padding: 2rem;
+    background: var(--bg-secondary); /* Kept as is, should look fine */
+    border-radius: 1rem;
+    border: 1px solid var(--border-primary);
+}
+.ai-scholarship-recommendations .ai-container > div:last-child h3 {
+    color: var(--text-primary); margin-bottom: 1rem; font-size: 1.25rem;
+}
+.ai-scholarship-recommendations .ai-container > div:last-child div { /* flex container for buttons */
+    display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+}
+.ai-scholarship-recommendations .ai-container > div:last-child button {
+    display: flex; align-items: center; gap: 0.5rem;
+    padding: 0.75rem 1.5rem; font-size: 0.875rem;
+}
+/* .btn-primary and .btn-secondary styles already apply */
+.ai-scholarship-recommendations .ai-container > div:last-child .btn-secondary {
+    background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-primary);
+}
+
+
+/* Enhanced AI card specific styles that were in JS */
+.scholarship-card.enhanced-ai-card .card-header { /* AI card header */
+    position: relative; /* For AI Match badge positioning if needed */
+}
+.enhanced-ai-card .ai-match-badge { /* Green badge */
+    background: linear-gradient(135deg, #10b981, #34d399);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+.enhanced-ai-card .ai-insights { /* Box for "Why this matches you" */
+    background: var(--bg-tertiary); /* Different from card body */
+    padding: 0.75rem;
+    border-radius: 0.75rem; /* Was 0.5rem */
+    margin: 1rem 0;
+    border-left: 3px solid var(--accent-primary);
+}
+.enhanced-ai-card .ai-insights div:first-child { /* "Why this matches you:" text */
+    font-size: 0.875rem;
+    color: var(--text-primary); /* Changed from text-secondary */
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+.enhanced-ai-card .ai-insights div:last-child { /* Insight text */
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    line-height: 1.4; /* from inline JS */
+}
+.enhanced-ai-card .card-actions .btn-secondary { /* "Ask AI" button */
+    background: var(--accent-secondary);
+    color: white;
+    border: none;
+}
+
+
+.welcome-state {
+    text-align: center; padding: 3rem 2rem; color: var(--text-secondary);
+}
+.welcome-icon { font-size: 4rem; margin-bottom: 1.5rem; opacity: 0.7; }
+.welcome-state h3 { color: var(--text-primary); margin-bottom: 1rem; font-size: 1.5rem; }
+.welcome-state p { color: var(--text-secondary) !important; margin-bottom: 2rem; font-size: 1.125rem; line-height: 1.6; }
+.welcome-suggestions { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; max-width: 600px; margin: 0 auto; }
+.welcome-suggestion {
+    background: var(--accent-primary); color: white; padding: 0.75rem 1.25rem;
+    border-radius: 2rem; font-size: 0.875rem; cursor: pointer;
+    transition: all 0.3s ease; border: none; font-weight: 500;
+}
+.welcome-suggestion:hover { background: var(--accent-secondary); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3); }
+.dark-mode .welcome-suggestion:hover { box-shadow: 0 8px 20px rgba(99, 102, 241, 0.2); }
+
+
+/* Animations */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in { animation: fadeInUp 0.8s ease-out both; }
+.animate-fade-in-delay-1 { animation: fadeInUp 0.8s ease-out 0.2s both; }
+.animate-fade-in-delay-2 { animation: fadeInUp 0.8s ease-out 0.4s both; }
+.animate-fade-in-delay-3 { animation: fadeInUp 0.8s ease-out 0.6s both; }
+
+.animate-on-scroll { opacity: 0; transform: translateY(30px); transition: all 0.6s ease-out; }
+.animate-on-scroll.animated { opacity: 1; transform: translateY(0); }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  :root { --section-padding: 3rem 0; }
+  .hero { padding: 5rem 0 3rem; }
+  .hero-stats { gap: 1.5rem; }
+  .stat-number { font-size: 2rem; }
+  .search-grid { grid-template-columns: 1fr; }
+  .search-row { flex-direction: column; align-items: stretch; }
+  .search-field-group { flex-direction: column; }
+  .search-field-group > * { min-width: 0; }
+  .results-header { flex-direction: column; align-items: stretch; }
+  .results-controls { justify-content: space-between; }
+  .scholarships-grid { grid-template-columns: 1fr; } /* Affects search and AI recs */
+  .card-actions { flex-direction: column; }
+  .cta-buttons { flex-direction: column; }
+  .pagination { gap: 0.25rem; }
+  .pagination-btn { padding: 0.5rem 0.75rem; font-size: 0.75rem; }
+  .footer-content { grid-template-columns: 1fr; text-align: center; }
+  .scholarships-list .scholarship-card { flex-direction: column; align-items: stretch; }
+  .scholarships-list .card-header { flex-direction: row; justify-content: space-between; align-items: center; width: 100%; margin-right: 0; margin-bottom: 1rem; }
+  .scholarships-list .card-header .bookmark-btn { margin-top: 0; }
+  .scholarships-list .card-content { margin-right: 0; margin-bottom: 1rem; }
+  .scholarships-list .card-actions { width: 100%; flex-direction: row; }
+  .scholarships-list .card-actions .btn-primary, .scholarships-list .card-actions .btn-secondary { flex: 1; }
+  .notification-container { left: 1rem; right: 1rem; max-width: none; width: auto; }
+
+  /* Hero CTA Responsive */
+  .cta-options { grid-template-columns: 1fr; gap: 1rem; }
+  .cta-divider { display: none; }
+  .cta-option { padding: 1.5rem; }
+  .quick-search-form { flex-direction: column; }
+  .quick-search-btn { width: 100%; border-radius: 2rem; height: 50px; }
+
+  /* AI Chat Responsive */
+  .ai-container { padding: 1rem; /*height: calc(100vh - 60px);*/ } /* Adjust if nav height is different */
+  .ai-title { font-size: 2rem; }
+  .ai-header { margin-bottom: 1rem; }
+  .chat-container { min-height: 400px; max-height: 60vh; }
+  .message-content { max-width: 85%; }
+  .welcome-suggestions { flex-direction: column; }
+
+}
+
+@media (max-width: 640px) {
+  .container { padding: 0 1rem; }
+  .nav-container { padding: 0.75rem 1rem; }
+  .search-form { padding: 1.5rem; } /* Old home search */
+  .advanced-search-form { padding: 1rem; } /* Search page form */
+  .scholarship-card { padding: 1rem; }
+  .feature-card { padding: 1.5rem; }
+  .modal-content { max-height: 95vh; }
+  .modal-header, .modal-body, .modal-footer { padding: 1rem; }
+  .modal-header h2 { font-size: 1.25rem; }
+}
+
+/* Print Styles */
+@media print {
+  body { background-color: #fff; color: #000; }
+  .navbar, .hero-background, .cta-section, .pagination, .theme-toggle,
+  .nav-menu-toggle, .mobile-menu-toggle, .loading-overlay, .notification-container, .bookmark-btn,
+  .card-actions .btn-secondary, .search-header .advanced-search-form,
+  .results-controls, .hero-cta, .ai-chat-area-wrapper .chat-input-container, .ai-chat-area-wrapper .chat-header .chat-actions,
+  .ai-scholarship-recommendations .ai-container > div:last-child /* Hide AI rec action buttons */
+   { display: none !important; }
+  
+  .hero { background: white !important; color: black !important; padding: 2rem 0; min-height: auto; }
+  .hero-title, .hero-subtitle, .hero-content h3 { color: black !important; text-shadow: none !important; }
+  .hero-stats .stat-number { color: #333 !important; }
+  .hero-stats .stat-label { color: #555 !important; }
+  .scholarship-card { break-inside: avoid; box-shadow: none !important; border: 1px solid #ccc !important; padding: 0.5rem !important; page-break-inside: avoid; }
+  .scholarship-card:hover { transform: none !important; }
+  .scholarships-grid, .scholarships-list { grid-template-columns: 1fr !important; display: block !important; }
+  .scholarships-list .scholarship-card { flex-direction: column !important; }
+  .card-badge { background: #eee !important; color: #000 !important; border: 1px solid #ccc; }
+  .card-actions .btn-primary { background: transparent !important; color: var(--accent-primary) !important; border: none !important; padding: 0 !important; text-decoration: underline !important; }
+  .modal-overlay, .modal-content { position: static !important; display: block !important; width: auto !important; max-height: none !important; box-shadow: none !important; border: 1px solid #ccc !important; overflow: visible !important; transform: none !important; opacity: 1 !important; visibility: visible !important; background: white !important; }
+  .modal-body { overflow-y: visible !important; }
+  a { color: #007bff !important; }
+  a[href^="#"]:after, a[href^="javascript:"]:after { content: "" !important; }
+  a[href]:not([href^="#"]):not([href^="javascript:"]):after { content: " (" attr(href) ")" !important; font-size: 0.8em; font-style: italic; }
+  h1, h2, h3, h4, h5, h6, p { color: #000 !important; }
+  .section-header, .section-title, .section-subtitle { color: #000 !important; }
+  .footer { border-top: 1px solid #ccc !important; background: #f9f9f9 !important; }
+  .ai-page { background: white !important; padding-top: 1rem !important; }
+  .ai-chat-area-wrapper { background: #f0f0f0 !important; /* Simple light grey for print */ animation: none !important; }
+  .ai-header h1, .ai-header p { color: black !important; text-shadow: none !important; }
+  .chat-container { box-shadow: none !important; border: 1px solid #ccc !important; }
+  .chat-header { background: #eee !important; color: black !important; border-bottom: 1px solid #ccc !important;}
+  .chat-header .ai-avatar { background: #ddd !important; color: black !important; border-color: #bbb !important;}
+  .chat-messages { background: white !important; }
+  .message.ai .message-content { background: #f9f9f9 !important; border-color: #ddd !important; }
+  .message.user .message-content { background: #e9f5ff !important; color: black !important; }
+  .ai-scholarship-recommendations .ai-container > div:first-child { background: #eee !important; color: black !important; border-color: #ccc !important;}
+  .ai-scholarship-recommendations .ai-container > div:first-child h2, .ai-scholarship-recommendations .ai-container > div:first-child p { color: black !important; }
+}
+/* --- START OF STYLES.CSS ADDITIONS --- */
+
+/* Auth Page Styles */
+.auth-section {
+    padding: 8rem 0 4rem; /* Adjust padding to account for fixed navbar */
+    min-height: calc(100vh - 80px); /* Full height minus navbar */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-secondary);
+}
+
+.auth-container {
+    background-color: var(--bg-primary);
+    padding: 2.5rem;
+    border-radius: 1rem;
+    box-shadow: var(--shadow-xl);
+    width: 100%;
+    max-width: 450px;
+    border: 1px solid var(--border-primary);
+}
+
+.auth-title {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--text-primary);
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
+/* General form input, including auth forms */
+.form-input { 
+    width: 100%;
+    padding: 0.875rem 1rem;
+    border: 1px solid var(--border-secondary);
+    border-radius: 0.5rem;
+    background: var(--bg-primary); /* Light mode: white */
+    color: var(--text-primary);    /* Light mode: dark text */
+    font-size: 1rem;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast), color var(--transition-fast);
+}
+.dark-mode .form-input {
+    background: var(--bg-secondary); /* Dark mode: e.g., #1e293b (darker than page bg for contrast) */
+    color: var(--text-primary);     /* Dark mode: light text */
+    border-color: var(--border-primary); /* Dark mode: e.g., #334155 */
+}
+
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+.dark-mode .form-input:focus {
+    border-color: var(--accent-primary);
+    background: var(--bg-tertiary); /* Dark mode focus: e.g., #334155 */
+    color: var(--text-primary);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+
+.auth-submit-btn { /* Specific to auth form submit buttons */
+    padding: 1rem;
+    font-size: 1rem;
+    margin-top: 1rem;
+    /* .btn-primary styles already defined */
+}
+
+.auth-switch {
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.auth-switch a {
+    color: var(--accent-primary);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.auth-switch a:hover {
+    text-decoration: underline;
+}
+
+/* Flash Messages */
+.flash-messages {
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.flash-message {
+    padding: 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.9rem;
+    border: 1px solid transparent;
+}
+
+.flash-success {
+    background-color: #d1fae5; /* Light green */
+    color: #065f46; /* Dark green */
+    border-color: #6ee7b7;
+}
+.dark-mode .flash-success {
+    background-color: #064e3b; /* Darker green for dark mode */
+    color: #a7f3d0;
+    border-color: #10b981;
+}
+
+
+.flash-error {
+    background-color: #fee2e2; /* Light red */
+    color: #991b1b; /* Dark red */
+    border-color: #fca5a5;
+}
+.dark-mode .flash-error {
+    background-color: #7f1d1d;
+    color: #fecaca;
+    border-color: #ef4444;
+}
+
+.flash-info {
+    background-color: #dbeafe; /* Light blue */
+    color: #1e40af; /* Dark blue */
+    border-color: #93c5fd;
+}
+.dark-mode .flash-info {
+    background-color: #1e3a8a;
+    color: #bfdbfe;
+    border-color: #60a5fa;
+}
+
+/* Inputs on search header (gradient background) should remain light */
+.search-input-inline { /* This class is on search.html header inputs */
+  /* Styles for light input on dark/gradient background are already defined above and are correct */
+}
+.search-input-inline.form-input { /* If a select also has this class */
+    background: rgba(255, 255, 255, 0.9) !important; /* Ensure select also has light bg */
+    color: #333 !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+}
+.dark-mode .search-input-inline.form-input { /* Still light input even in dark mode due to gradient bg */
+     background: rgba(255, 255, 255, 0.9) !important;
+     color: #333 !important;
+     border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+
+@media (max-width: 768px) {
+    .auth-section {
+        padding: 6rem 1rem 3rem; /* Adjust padding for smaller screens */
+    }
+    .auth-container {
+        padding: 1.5rem;
+    }
+    .auth-title {
+        font-size: 1.75rem;
+    }
+}

@@ -1,0 +1,47 @@
+
+<nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="nav-container">
+        <a href="{{ url_for('index') }}" class="nav-brand" aria-label="SchoolSmart.ai home">
+            <div class="nav-logo" aria-hidden="true">🎓</div>
+            <span>SchoolSmart.ai</span>
+        </a>
+        
+        <div class="nav-controls">
+            <div class="nav-links" id="mainNavLinks">
+                <a href="{{ url_for('index') }}" class="nav-link {% if request.endpoint == 'index' %}active{% endif %}">Home</a>
+                <a href="{{ url_for('search_page') }}" class="nav-link {% if request.endpoint == 'search_page' %}active{% endif %}">Search</a>
+                <a href="{{ url_for('ai_recommend_page') }}" class="nav-link {% if request.endpoint == 'ai_recommend_page' %}active{% endif %}">AI Advisor</a>
+                
+                {% if request.endpoint in ['index'] %}
+                    {# These links are only for the index page as they point to sections on that page #}
+                    <a href="{{ url_for('index') }}#about-us" class="nav-link">About Us</a> 
+                    <a href="{{ url_for('index') }}#contact-us" class="nav-link">Contact Us</a>
+                {% endif %}
+
+                 {% if g.user %}
+                    <a href="{{ url_for('bookmarks_page') }}" class="nav-link {% if request.endpoint == 'bookmarks_page' %}active{% endif %}">My Bookmarks</a>
+                    {# BEGIN ADMIN LINK #}
+                    {% if g.user and 'email' in g.user and g.user.email == "greene.wyatt30@gmail.com" %}
+                    <a href="{{ url_for('admin_page') }}" class="nav-link {% if request.endpoint == 'admin_page' %}active{% endif %}">Admin</a>
+                    {% endif %}
+                    {# END ADMIN LINK #}
+                    <a href="{{ url_for('logout_route') }}" class="nav-link">Logout ({{ g.user.name }})</a>
+                {% else %}
+                    <a href="{{ url_for('login_route') }}" class="nav-link {% if request.endpoint == 'login_route' %}active{% endif %}">Login</a>
+                    <a href="{{ url_for('register_route') }}" class="nav-link {% if request.endpoint == 'register_route' %}active{% endif %}">Sign Up</a>
+                {% endif %}
+            </div>
+            
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                <span class="theme-icon" aria-hidden="true">🌙</span>
+            </button>
+            
+            {# Use a consistent mobile menu toggle structure #}
+            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle mobile menu" aria-expanded="false" aria-controls="mainNavLinks">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </div>
+</nav>
